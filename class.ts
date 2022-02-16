@@ -35,6 +35,22 @@ export class Point {
   get oppisetPosition() {
     return 25 - this.position
   }
+
+  isHouse() {
+    return this.checkers.length > 1
+  }
+
+  isSingle() {
+    return this.checkers.length === 1
+  }
+
+  owendBy(player: Player) {
+    if (!this.checkers.length) {
+      return false;
+    }
+
+    return !!this.checkers.find(c => c.color === player.color)
+  }
 }
 
 export interface BoardState {
@@ -47,3 +63,9 @@ export interface BoardState {
 }
 
 export type PointNames = Exclude<UntilRange<25>, 0>
+
+
+export interface Moves {
+  from: Point
+  toCombinations: Point[][]
+}
