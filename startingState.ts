@@ -1,7 +1,7 @@
 import { BoardState, Checker, PlayerColor, Point } from "./class";
 
 export const initialState: BoardState = {
-  // todo make prison as a Point instance, so it can be calced in getSingleMoveForChecker (distinct white an black)
+  // todo make prison as a Point instance, so it can be calced in getSingleMoveForChecker (distinct white an black), add also onwned by implementation for prison
   
   points: [
     new Point(1, [

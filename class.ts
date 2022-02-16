@@ -44,6 +44,7 @@ export class Point {
     return this.checkers.length === 1
   }
 
+  // todo rename includesCheckersOf
   owendBy(player: Player) {
     if (!this.checkers.length) {
       return false;

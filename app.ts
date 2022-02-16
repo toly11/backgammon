@@ -43,15 +43,12 @@ export class Board {
 
   getPlayersPoints(player: Player = this.currentPlayer) {
     return this.state.points.filter(point =>
-      point.checkers.find(c => c.color === player.color)
+      point.owendBy(player)
     );
   }
 
   score(player: Player) {
-    const filtered = this.state.points.filter(point =>
-      // todo use ownedBy method
-      point.checkers.find(c => c.color === player.color)
-    );
+    const filtered = this.getPlayersPoints(player)
 
     let totalScore = 0;
     for (let point of filtered) {
