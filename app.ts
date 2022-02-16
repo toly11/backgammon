@@ -1,4 +1,4 @@
-import { Moves, Player, PlayerColor, Point } from "./class";
+import { Dice, DiceResut, Moves, Player, PlayerColor, Point } from "./class";
 import { initialState } from "./startingState";
 
 export class Board {
@@ -16,25 +16,6 @@ export class Board {
     } else {
       this.currentPlayer = this.white
     }
-  }
-
-  // todo extract dice to different class
-  roll1Dice() {
-    return Math.floor(Math.random() * 6 + 1);
-  }
-
-  roll2Dices() {
-    const dices = [this.roll1Dice(), this.roll1Dice()];
-
-    if (this.dicesAreDouble(dices)) {
-      dices.push(...dices);
-    }
-
-    return dices;
-  }
-
-  dicesAreDouble(dices: number[]) {
-    return dices[0] === dices[1];
   }
 
   PlayerInPrison(player: Player = this.currentPlayer): boolean {
@@ -90,13 +71,13 @@ export class Board {
     return this.state.points.find(p => p.position === position)!
   }
 
-  getAllMovesForChecker(point: Point, dices: number[], player: Player) {
+  getAllMovesForChecker(point: Point, dices: DiceResut[], player: Player) {
     let moves: Moves = {
       from: point,
       toCombinations: []
     }
 
-    const loopDices = (dices: number[]) => {
+    const loopDices = (dices: DiceResut[]) => {
       let _total = 0;
       const _moveSteps: Point[] = [];
 
@@ -112,14 +93,14 @@ export class Board {
     }
 
     loopDices(dices)
-    if (!this.dicesAreDouble(dices)) {
+    if (!Dice.dicesAreDouble(dices)) {
       loopDices(dices.reverse())
     }
 
     return moves;
   }
 
-  getTargetPoint(point: Point, dice: number, player: Player): Point {
+  getTargetPoint(point: Point, dice: DiceResut, player: Player): Point {
     const position = (player.color === PlayerColor.white)
       ? Math.max(point.position - dice, player.home)
       : Math.min(point.position + dice, player.home);
@@ -134,7 +115,7 @@ export class Board {
     return true
   }
 
-  getAllPossibleMoves(dices: number[], player: Player = this.currentPlayer) {
+  getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer) {
     // todo check if in prison
     const possibleMoves: Moves[] = [];
 
