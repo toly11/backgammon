@@ -46,13 +46,17 @@ export class Board {
     }
 
     const points = this.currentPlayersPoints();
-    return points.every((point) => point.position <= 6);
-
-    // todo use new pointDistanceFromHome ^ 
+    return points.every(point =>
+      this.pointDistanceFromHome(point) <= 6
+    );
   }
 
-  pointDistanceFromHome(point: Point, player: Player): number {
-    return player.home - point.position
+  pointDistanceFromHome(point: Point, player: Player = this.currentPlayer): number {
+    if (player.color === PlayerColor.white) {
+      return point.position
+    } else {
+      return player.home - point.position
+    }
   }
 
   currentPlayersPoints() {
@@ -62,13 +66,13 @@ export class Board {
   }
 
   score(player: Player) {
-    const filtered = this.state.points.filter((ponit) =>
-      ponit.checkers.find((c) => c.color === player.color)
+    const filtered = this.state.points.filter(point =>
+      point.checkers.find(c => c.color === player.color)
     );
 
     let totalScore = 0;
     for (let point of filtered) {
-      totalScore += point.checkers.length * point.position;
+      totalScore += point.checkers.length * this.pointDistanceFromHome(point, player);
     }
 
     if (this.PlayerInPrison(player)) {
