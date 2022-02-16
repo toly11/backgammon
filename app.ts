@@ -1,4 +1,4 @@
-import { Player, PlayerColor, PlayerHome, Point } from "./class";
+import { Player, PlayerColor, Point } from "./class";
 import { initialState } from "./startingState";
 
 export class Board {
@@ -8,13 +8,13 @@ export class Board {
   black = new Player(PlayerColor.black);
 
   // todo change to Player with props
-  currentPlayer: PlayerColor = PlayerColor.white;
+  currentPlayer: Player = this.white;
 
   toggleCurrentPlayer() {
-    if (this.currentPlayer === PlayerColor.white) {
-      this.currentPlayer = PlayerColor.black;
+    if (this.currentPlayer.color === PlayerColor.white) {
+      this.currentPlayer = this.black
     } else {
-      this.currentPlayer = PlayerColor.white;
+      this.currentPlayer = this.white
     }
   }
 
@@ -36,9 +36,8 @@ export class Board {
     }
   }
 
-  // defaults to current player
-  PlayerInPrison(player: PlayerColor = this.currentPlayer): boolean {
-    return !!this.state.prison.find((c) => c.color === player);
+  PlayerInPrison(player: Player = this.currentPlayer): boolean {
+    return !!this.state.prison.find((c) => c.color === player.color);
   }
 
   currentPlayerCanBearOff(): boolean {
@@ -58,13 +57,13 @@ export class Board {
 
   currentPlayersPoints() {
     return this.state.points.filter((point) =>
-      point.checkers.find((c) => c.color === this.currentPlayer)
+      point.checkers.find((c) => c.color === this.currentPlayer.color)
     );
   }
 
-  score(player: PlayerColor) {
-    const filtered = this.state.points.filter((p) =>
-      p.checkers.find((c) => c.color === player)
+  score(player: Player) {
+    const filtered = this.state.points.filter((ponit) =>
+      ponit.checkers.find((c) => c.color === player.color)
     );
 
     let totalScore = 0;
@@ -74,7 +73,7 @@ export class Board {
 
     if (this.PlayerInPrison(player)) {
       totalScore += this.state.prison.filter(checker =>
-        checker.color === player
+        checker.color === player.color
       ).length * 25
     }
 
