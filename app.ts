@@ -55,11 +55,6 @@ export class Board {
     return totalScore;
   }
 
-  // todo make static on Point class (position, state) => Point
-  getPointByPosition(position: Point['position']): Point {
-    return this.state.points.find(p => p.position === position)!
-  }
-
   getAllMovesForChecker(point: Point, dices: DiceResut[], player: Player) {
     let moves: Moves = {
       from: point,
@@ -94,7 +89,7 @@ export class Board {
       ? Math.max(point.position - dice, player.home)
       : Math.min(point.position + dice, player.home);
 
-    return this.getPointByPosition(position as Point['position'])
+    return Point.getPointRefByPosition(position as Point['position'], this.state)
   }
 
   getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer) {

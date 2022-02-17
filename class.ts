@@ -1,3 +1,4 @@
+import { Board } from "./app";
 import { UntilRange } from "./util";
 
 export enum PlayerColor {
@@ -70,6 +71,10 @@ export class Point {
       return false
     }
     return true
+  }
+
+  static getPointRefByPosition(position: Point['position'], state: Board['state']): Point {
+    return state.points.find(p => p.position === position)!
   }
 }
 
