@@ -67,7 +67,7 @@ export class Board {
 
       for (let dice of dices) {
         const target = this.getTargetPoint(point, dice + _total, player)
-        if (!target.isAvailableFor(player))
+        if (! target || !target.isAvailableFor(player))
           break;
 
         _moveSteps.push(Object.assign({}, target))
@@ -84,7 +84,7 @@ export class Board {
     return moves;
   }
 
-  getTargetPoint(point: Point, dice: DiceResut, player: Player): Point {
+  getTargetPoint(point: Point, dice: DiceResut, player: Player): Point | undefined {
     const position = (player.color === PlayerColor.white)
       ? Math.max(point.position - dice, player.home)
       : Math.min(point.position + dice, player.home);

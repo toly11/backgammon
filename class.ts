@@ -73,8 +73,8 @@ export class Point {
     return true
   }
 
-  static getPointRefByPosition(position: Point['position'], state: Board['state']): Point {
-    return state.points.find(p => p.position === position)!
+  static getPointRefByPosition(position: Point['position'], state: Board['state']): Point | undefined {
+    return state.points.find(p => p.position === position)
   }
 }
 
