@@ -72,7 +72,7 @@ export class Board {
 
       for (let dice of dices) {
         const target = this.getTargetPoint(point, dice + _total, player)
-        if (!this.isAvailableFor(target, player))
+        if (!target.isAvailableFor(player))
           break;
 
         _moveSteps.push(Object.assign({}, target))
@@ -95,14 +95,6 @@ export class Board {
       : Math.min(point.position + dice, player.home);
 
     return this.getPointByPosition(position as Point['position'])
-  }
-
-  // todo move to Point class
-  isAvailableFor(point: Point, player: Player) {
-    if ((!point.includesCheckerOf(player)) && point.isHouse()) {
-      return false
-    }
-    return true
   }
 
   getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer) {

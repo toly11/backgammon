@@ -64,6 +64,13 @@ export class Point {
 
     return !!this.checkers.find(c => c.color === player.color)
   }
+
+  isAvailableFor(player: Player) {
+    if ((!this.includesCheckerOf(player)) && this.isHouse()) {
+      return false
+    }
+    return true
+  }
 }
 
 export interface BoardState {
