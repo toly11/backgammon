@@ -1,4 +1,7 @@
-import { Dice, DiceResut, Moves, Player, PlayerColor, Point } from "./class";
+import { Moves } from "./modules/Board";
+import { Player, PlayerColor } from "./modules/Player";
+import { Dice, DiceResut } from "./modules/Dice";
+import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
 
 export class Board {
