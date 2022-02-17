@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/toly11/backgamon.git"
+    "url": "git+https://github.com/toly11/backgammon.git"
   },
   "keywords": [
     "backgammon",
@@ -17,9 +17,9 @@
   "author": "toly11",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/toly11/backgamon/issues"
+    "url": "https://github.com/toly11/backgammon/issues"
   },
-  "homepage": "https://github.com/toly11/backgamon#readme",
+  "homepage": "https://github.com/toly11/backgammon#readme",
   "dependencies": {
     "mocha": "^9.2.0"
   }
