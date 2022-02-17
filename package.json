@@ -1,0 +1,23 @@
+{
+  "name": "backgamon",
+  "version": "1.0.0",
+  "description": "a clean api for building a backgammon game",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toly11/backgamon.git"
+  },
+  "keywords": [
+    "backgammon",
+    "game"
+  ],
+  "author": "toly11",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toly11/backgamon/issues"
+  },
+  "homepage": "https://github.com/toly11/backgamon#readme"
+}
