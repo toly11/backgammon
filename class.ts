@@ -32,8 +32,20 @@ export class Point {
     public checkers: Checker[] = []
   ) { }
 
+  // ! not in use
   get oppisetPosition() {
     return 25 - this.position
+  }
+
+  relativePositionFromHome(player: Player) {
+    if (this.position === 25) // is prison
+      return this.position;
+
+    if (player.color === PlayerColor.white) {
+      return this.position
+    } else {
+      return player.home - this.position
+    }
   }
 
   isHouse() {
@@ -45,7 +57,7 @@ export class Point {
   }
 
   // todo rename includesCheckersOf
-  owendBy(player: Player) {
+  includesCheckerOf(player: Player) {
     if (!this.checkers.length) {
       return false;
     }
@@ -56,14 +68,14 @@ export class Point {
 
 export interface BoardState {
   points: Point[];
-  prison: Checker[];
+  prison: Point;
   home: {
     white: Checker[];
     black: Checker[];
   };
 }
 
-export type PointNames = Exclude<UntilRange<25>, 0>
+export type PointNames = Exclude<UntilRange<25>, 0> | 25
 
 
 export interface Moves {

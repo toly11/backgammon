@@ -19,7 +19,7 @@ export class Board {
   }
 
   PlayerInPrison(player: Player = this.currentPlayer): boolean {
-    return !!this.state.prison.find((c) => c.color === player.color);
+    return this.state.prison.includesCheckerOf(player)
   }
 
   currentPlayerCanBearOff(): boolean {
@@ -29,41 +29,33 @@ export class Board {
 
     const points = this.getPlayersPoints();
     return points.every(point =>
-      this.pointDistanceFromHome(point) <= 6
+      point.relativePositionFromHome(this.currentPlayer) <= 6
     );
-  }
-
-  pointDistanceFromHome(point: Point, player: Player = this.currentPlayer): number {
-    if (player.color === PlayerColor.white) {
-      return point.position
-    } else {
-      return player.home - point.position
-    }
   }
 
   getPlayersPoints(player: Player = this.currentPlayer) {
     return this.state.points.filter(point =>
-      point.owendBy(player)
+      point.includesCheckerOf(player)
     );
   }
 
   score(player: Player) {
-    const filtered = this.getPlayersPoints(player)
-
-    let totalScore = 0;
-    for (let point of filtered) {
-      totalScore += point.checkers.length * this.pointDistanceFromHome(point, player);
-    }
+    const playersPoints = this.getPlayersPoints(player)
 
     if (this.PlayerInPrison(player)) {
-      totalScore += this.state.prison.filter(checker =>
-        checker.color === player.color
-      ).length * 25
+      playersPoints.push(this.state.prison)
+    }
+
+    let totalScore = 0;
+    for (let point of playersPoints) {
+      totalScore += point.relativePositionFromHome(player)
+        * point.checkers.length
     }
 
     return totalScore;
   }
 
+  // todo make static on Point class (position, state) => Point
   getPointByPosition(position: Point['position']): Point {
     return this.state.points.find(p => p.position === position)!
   }
@@ -105,8 +97,9 @@ export class Board {
     return this.getPointByPosition(position as Point['position'])
   }
 
+  // todo move to Point class
   isAvailableFor(point: Point, player: Player) {
-    if ((!point.owendBy(player)) && point.isHouse()) {
+    if ((!point.includesCheckerOf(player)) && point.isHouse()) {
       return false
     }
     return true
