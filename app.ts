@@ -1,8 +1,9 @@
-import { Moves } from "./modules/Board";
+import { Move, Moves } from "./modules/Board";
 import { Player, PlayerColor } from "./modules/Player";
-import { Dice, DiceResut } from "./modules/Dice";
+import { Dice, DiceResut, DiceObject } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
+import { shiftItemToBegining } from "./util";
 
 export class Board {
   state = initialState;
@@ -70,7 +71,7 @@ export class Board {
 
       for (let dice of dices) {
         const target = this.getTargetPoint(point, dice + _total, player)
-        if (! target || !target.isAvailableFor(player))
+        if (!target || !target.isAvailableFor(player))
           break;
 
         _moveSteps.push(Object.assign({}, target))
@@ -85,6 +86,43 @@ export class Board {
     }
 
     return moves;
+  }
+
+
+
+  getAllMovesForPoint(point: Point, dices: DiceResut[], player: Player): Move[] {
+    const totalMoves: Move[] = []
+
+    const _loopDices = (dices: DiceObject[]): void => {
+      const pointsPath: Point[] = [];
+      const usesDices: DiceObject["id"][] = [];
+      let currentDistance = 0;
+
+      for (let dice of dices) {
+        const target = this.getTargetPoint(point, currentDistance + dice.value, player)
+        if (!target || !target.isAvailableFor(player))
+          break;
+
+        pointsPath.push(target)
+        usesDices.push(dice.id)
+
+        totalMoves.push({
+          from: point,
+          path: [...pointsPath],
+          usesDices: [...usesDices]
+        })
+        currentDistance += dice.value;
+      }
+    }
+
+    const dicesObjects = dices.map((value, id) => ({ id, value }))
+    dicesObjects.forEach(dice => {
+      _loopDices(
+        shiftItemToBegining(dicesObjects, dice)
+      )
+    })
+
+    return totalMoves
   }
 
   getTargetPoint(point: Point, dice: DiceResut, player: Player): Point | undefined {
