@@ -59,37 +59,6 @@ export class Board {
     return totalScore;
   }
 
-  getAllMovesForChecker(point: Point, dices: DiceResut[], player: Player) {
-    let moves: Moves = {
-      from: point,
-      toCombinations: []
-    }
-
-    const loopDices = (dices: DiceResut[]) => {
-      let _total = 0;
-      const _moveSteps: Point[] = [];
-
-      for (let dice of dices) {
-        const target = this.getTargetPoint(point, dice + _total, player)
-        if (!target || !target.isAvailableFor(player))
-          break;
-
-        _moveSteps.push(Object.assign({}, target))
-        moves.toCombinations.push([..._moveSteps])
-        _total += dice;
-      }
-    }
-
-    loopDices(dices)
-    if (!Dice.dicesAreDouble(dices)) {
-      loopDices(dices.reverse())
-    }
-
-    return moves;
-  }
-
-
-
   getAllMovesForPoint(point: Point, dices: DiceResut[], player: Player): Move[] {
     const totalMoves: Move[] = []
 
@@ -133,15 +102,15 @@ export class Board {
     return Point.getPointRefByPosition(position as Point['position'], this.state)
   }
 
-  getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer) {
+  getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer): Move[] {
     // todo check if in prison
-    const possibleMoves: Moves[] = [];
+    const possibleMoves: Move[] = [];
 
     const points = this.getPlayersPoints(player)
     points.forEach(point => {
-      const moves = this.getAllMovesForChecker(point, dices, player)
-      if (moves.toCombinations.length > 0) {
-        possibleMoves.push(moves)
+      const moves = this.getAllMovesForPoint(point, dices, player)
+      if (moves.length > 0) {
+        possibleMoves.push(...moves)
       }
     })
 
