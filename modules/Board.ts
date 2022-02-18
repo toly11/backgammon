@@ -12,11 +12,6 @@ export interface BoardState {
   };
 }
 
-export interface Moves {
-  from: Point;
-  toCombinations: Point[][];
-}
-
 export interface Move {
   from: Point
   path: Point[]

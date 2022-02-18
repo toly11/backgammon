@@ -1,6 +1,6 @@
-import { Move, Moves } from "./modules/Board";
+import { Move } from "./modules/Board";
 import { Player, PlayerColor } from "./modules/Player";
-import { Dice, DiceResut, DiceObject } from "./modules/Dice";
+import { DiceResut, DiceObject } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
 import { unshiftFrom } from "./util";
