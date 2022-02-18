@@ -3,7 +3,7 @@ import { Player, PlayerColor } from "./modules/Player";
 import { Dice, DiceResut, DiceObject } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
-import { shiftItemToBegining } from "./util";
+import { unshiftFrom } from "./util";
 
 export class Board {
   state = initialState;
@@ -87,7 +87,7 @@ export class Board {
     const dicesObjects = dices.map((value, id) => ({ id, value }))
     dicesObjects.forEach(dice => {
       _loopDices(
-        shiftItemToBegining(dicesObjects, dice)
+        unshiftFrom(dicesObjects, dice)
       )
     })
 

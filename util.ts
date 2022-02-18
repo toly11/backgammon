@@ -11,8 +11,11 @@ type _Range<Max extends number, Arr extends number[]>
 
 
 // todo write tests
-export function shiftItemToBegining<T>(arr: T[], item: T): T[] {
-  return arr.sort((a, b) => {
-    return (a === item) ? -1 : 0
-  })
+export function unshiftFrom<T>(arr: T[], item: T) {
+  const index = arr.indexOf(item)
+  if (index > -1 && index < arr.length) {
+    const [itemToMove] = arr.splice(index, 1)
+    arr.unshift(itemToMove)
+  }
+  return arr
 }
