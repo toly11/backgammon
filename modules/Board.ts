@@ -1,6 +1,6 @@
 import { Point } from "./Point";
 import { Checker } from "./Checker";
-import { DiceObject, DiceResut } from "./Dice";
+import { DiceResut } from "./Dice";
 
 
 export interface BoardState {
@@ -12,15 +12,9 @@ export interface BoardState {
   };
 }
 
-export interface Move {
-  from: Point
-  path: Point[]
-  usesDices: DiceObject["id"][]
-}
-
-export interface _singleMove {
+export interface SingleMove {
   from: Point
   to: Point
   uses: DiceResut
 }
-export type _path = _singleMove[]
+export type MovePath = SingleMove[]

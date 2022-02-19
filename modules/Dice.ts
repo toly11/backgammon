@@ -1,9 +1,3 @@
-// todo imloment this interface into a class, ctor=number[], return={this interface}
-export interface DiceObject {
-  id: number,
-  value: DiceResut
-}
-
 export type DiceResut = number;
 
 export class Dice {
