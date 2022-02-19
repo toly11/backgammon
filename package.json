@@ -2,7 +2,7 @@
   "name": "backgammon",
   "version": "1.1.0",
   "description": "a clean api for building a backgammon game",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha"
   },

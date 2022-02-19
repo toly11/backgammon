@@ -1,4 +1,4 @@
-import { Board } from "../app";
+import { Board } from "..";
 import { Checker } from "./Checker";
 import { UntilRange } from "../util";
 import { Player, PlayerColor } from "./Player";
