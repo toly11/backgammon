@@ -1,4 +1,4 @@
-import { Move } from "./modules/Board";
+import { Move, _path } from "./modules/Board";
 import { Player, PlayerColor } from "./modules/Player";
 import { DiceResut, DiceObject } from "./modules/Dice";
 import { Point } from "./modules/Point";
@@ -100,6 +100,58 @@ export class Board {
       : Math.min(point.position + dice, player.home);
 
     return Point.getPointRefByPosition(position as Point['position'], this.state)
+  }
+
+  _getMovesForPoint(point: Point, dices: DiceResut[], player: Player): _path[] {
+    const pointPaths: _path[] = []
+
+    const LoopDices = (dices: DiceResut[]): void => {
+      const path: _path = []
+      let distance = 0;
+      let lastPoint = point;
+      for (let dice of dices) {
+        const target = this.getTargetPoint(point, distance + dice, player)
+        if (!target || !target.isAvailableFor(player))
+          break;
+
+        path.push({
+          from: lastPoint,
+          to: target,
+          uses: dice
+        })
+
+        distance += dice
+        lastPoint = target;
+      }
+
+      if (path.length > 0) {
+        pointPaths.push(path)
+      }
+
+    }
+
+    dices.forEach(dice => {
+      LoopDices(
+        unshiftFrom(dices, dice)
+      )
+    })
+
+    return pointPaths
+  }
+
+  _getAllMoves(dices: DiceResut[], player: Player = this.currentPlayer): _path[] {
+    // todo check if in prison
+    const allPointsPaths: _path[] = []
+
+    const points = this.getPlayersPoints(player)
+    for (let point of points) {
+      const moves = this._getMovesForPoint(point, dices, player)
+      if (moves.length > 0) {
+        allPointsPaths.push(...moves)
+      }
+    }
+
+    return allPointsPaths
   }
 
   getAllPossibleMoves(dices: DiceResut[], player: Player = this.currentPlayer): Move[] {
