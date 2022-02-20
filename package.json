@@ -1,7 +1,7 @@
 {
   "name": "backgammon",
   "description": "a clean api for building a backgammon game",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "toly11",
   "license": "ISC",
   "homepage": "https://github.com/toly11/backgammon#readme",
