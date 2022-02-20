@@ -18,4 +18,13 @@ export class Dice {
   static dicesAreDouble(dices: DiceResut[]): boolean {
     return dices[0] === dices[1];
   }
+
+  static getStarterDices(): [DiceResut, DiceResut] {
+    let dices: [DiceResut, DiceResut];
+    do {
+      dices = [this.roll1Dice(), this.roll1Dice()];
+    } while (this.dicesAreDouble(dices));
+
+    return dices;
+  }
 }

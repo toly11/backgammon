@@ -1,6 +1,6 @@
 import { MovePath } from "./modules/Board";
 import { Player, PlayerColor, Players } from "./modules/Player";
-import { DiceResut } from "./modules/Dice";
+import { Dice, DiceResut } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
 import { unshiftFrom } from "./util";
@@ -12,15 +12,14 @@ export class Board {
     const _white = new Player(PlayerColor.white);
     const _black = new Player(PlayerColor.black);
 
-    // todo allow players to roll a single dice each, to determine who's first
-    // maybe, add a method on the Dice class, to get 2 dices, making sure they differ
-    // and call it, then assign them to white, black. then set as starter the greater one
-    this.player = new Players(_white, _black, _white);
+    // todo maybe move this logic to the Players constructor
+    const starterDices = Dice.getStarterDices();
+    const starter = starterDices[0] > starterDices[1] ? _white : _black;
+
+    this.player = new Players(_white, _black, starter);
   }
 
   state = initialState;
-
-  // todo change to Player with props
 
   PlayerInPrison(player: Player = this.player.current): boolean {
     return this.state.prison.includesCheckerOf(player);
