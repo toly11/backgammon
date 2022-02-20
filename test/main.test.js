@@ -1,4 +1,4 @@
-import { Board } from "../src/index";
+const { Board } = require("../dist");
 
 describe("Board", () => {
   const board = new Board();
