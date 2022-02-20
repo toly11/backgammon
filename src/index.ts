@@ -1,28 +1,28 @@
 import { MovePath } from "./modules/Board";
-import { Player, PlayerColor } from "./modules/Player";
+import { Player, PlayerColor, Players } from "./modules/Player";
 import { DiceResut } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
 import { unshiftFrom } from "./util";
 
 export class Board {
-  state = initialState;
+  player: Players;
 
-  white = new Player(PlayerColor.white);
-  black = new Player(PlayerColor.black);
+  constructor() {
+    const _white = new Player(PlayerColor.white);
+    const _black = new Player(PlayerColor.black);
 
-  // todo change to Player with props
-  currentPlayer: Player = this.white;
-
-  toggleCurrentPlayer() {
-    if (this.currentPlayer.color === PlayerColor.white) {
-      this.currentPlayer = this.black;
-    } else {
-      this.currentPlayer = this.white;
-    }
+    // todo allow players to roll a single dice each, to determine who's first
+    // maybe, add a method on the Dice class, to get 2 dices, making sure they differ
+    // and call it, then assign them to white, black. then set as starter the greater one
+    this.player = new Players(_white, _black, _white);
   }
 
-  PlayerInPrison(player: Player = this.currentPlayer): boolean {
+  state = initialState;
+
+  // todo change to Player with props
+
+  PlayerInPrison(player: Player = this.player.current): boolean {
     return this.state.prison.includesCheckerOf(player);
   }
 
@@ -33,11 +33,11 @@ export class Board {
 
     const points = this.getPlayersPoints();
     return points.every(
-      point => point.relativePositionFromHome(this.currentPlayer) <= 6
+      point => point.relativePositionFromHome(this.player.current) <= 6
     );
   }
 
-  getPlayersPoints(player: Player = this.currentPlayer) {
+  getPlayersPoints(player: Player = this.player.current) {
     return this.state.points.filter(point => point.includesCheckerOf(player));
   }
 
@@ -111,7 +111,7 @@ export class Board {
 
   getAllMovePaths(
     dices: DiceResut[],
-    player: Player = this.currentPlayer
+    player: Player = this.player.current
   ): MovePath[] {
     // todo check if in prison
     const allMovePaths: MovePath[] = [];
