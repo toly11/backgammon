@@ -19,8 +19,9 @@ export class Dice {
     return dices[0] === dices[1];
   }
 
-  static getStarterDices(): [DiceResut, DiceResut] {
-    let dices: [DiceResut, DiceResut];
+  // a weird bug makes tests fail when setting the return type to [DiceResut, DiceResut]
+  static getStarterDices(): DiceResut[] {
+    let dices: DiceResut[];
     do {
       dices = [this.roll1Dice(), this.roll1Dice()];
     } while (this.dicesAreDouble(dices));
