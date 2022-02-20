@@ -13,7 +13,7 @@ export class Player {
   home: PlayerHome;
 
   constructor(public color: PlayerColor) {
-    this.home = (color === PlayerColor.white)
-      ? PlayerHome.white : PlayerHome.black;
+    this.home =
+      color === PlayerColor.white ? PlayerHome.white : PlayerHome.black;
   }
 }

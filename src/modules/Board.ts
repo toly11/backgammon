@@ -2,7 +2,6 @@ import { Point } from "./Point";
 import { Checker } from "./Checker";
 import { DiceResut } from "./Dice";
 
-
 export interface BoardState {
   points: Point[];
   prison: Point;
@@ -13,8 +12,8 @@ export interface BoardState {
 }
 
 export interface SingleMove {
-  from: Point
-  to: Point
-  uses: DiceResut
+  from: Point;
+  to: Point;
+  uses: DiceResut;
 }
-export type MovePath = SingleMove[]
+export type MovePath = SingleMove[];
