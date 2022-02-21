@@ -24,6 +24,7 @@
     "src"
   ],
   "scripts": {
+    "all": "npm run lint && npm run build && npm run test",
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
