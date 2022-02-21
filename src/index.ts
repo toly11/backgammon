@@ -6,7 +6,7 @@ import { initialState } from "./startingState";
 import { unshiftFrom } from "./util";
 
 export class Board {
-  player: Players;
+  players: Players;
 
   constructor() {
     const _white = new Player(PlayerColor.white);
@@ -16,12 +16,12 @@ export class Board {
     const starterDices = Dice.getStarterDices();
     const starter = starterDices[0] > starterDices[1] ? _white : _black;
 
-    this.player = new Players(_white, _black, starter);
+    this.players = new Players(_white, _black, starter);
   }
 
   state = initialState;
 
-  PlayerInPrison(player: Player = this.player.current): boolean {
+  PlayerInPrison(player: Player = this.players.current): boolean {
     return this.state.prison.includesCheckerOf(player);
   }
 
@@ -32,11 +32,11 @@ export class Board {
 
     const points = this.getPlayersPoints();
     return points.every(
-      point => point.relativePositionFromHome(this.player.current) <= 6
+      point => point.relativePositionFromHome(this.players.current) <= 6
     );
   }
 
-  getPlayersPoints(player: Player = this.player.current) {
+  getPlayersPoints(player: Player = this.players.current) {
     return this.state.points.filter(point => point.includesCheckerOf(player));
   }
 
@@ -110,7 +110,7 @@ export class Board {
 
   getAllMovePaths(
     dices: DiceResut[],
-    player: Player = this.player.current
+    player: Player = this.players.current
   ): MovePath[] {
     // todo check if in prison
     const allMovePaths: MovePath[] = [];
