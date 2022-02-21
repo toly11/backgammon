@@ -12,7 +12,7 @@ describe("Board", () => {
       expect([0, 1]).toContain(currentPlayer.color);
     });
 
-    it("toggle() should word", () => {
+    it("toggle() should work", () => {
       const nextPlayer = Math.abs(currentPlayer.color - 1); // toggles 1 and 0
       expect(board.players.toggle().color).toEqual(nextPlayer);
     });
