@@ -1,6 +1,6 @@
 import { MovePath } from "./modules/Board";
 import { Player, PlayerColor, Players } from "./modules/Player";
-import { Dice, DiceResut } from "./modules/Dice";
+import { Dice, DiceResult } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialState } from "./startingState";
 import { unshiftFrom } from "./util";
@@ -58,7 +58,7 @@ export class Board {
 
   getTargetPoint(
     point: Point,
-    dice: DiceResut,
+    dice: DiceResult,
     player: Player
   ): Point | undefined {
     const position =
@@ -74,12 +74,12 @@ export class Board {
 
   getMovePathsForPoint(
     point: Point,
-    dices: DiceResut[],
+    dices: DiceResult[],
     player: Player
   ): MovePath[] {
     const pointPaths: MovePath[] = [];
 
-    const LoopDices = (dices: DiceResut[]): void => {
+    const LoopDices = (dices: DiceResult[]): void => {
       const movePath: MovePath = [];
       let distance = 0;
       let lastPoint = point;
@@ -109,7 +109,7 @@ export class Board {
   }
 
   getAllMovePaths(
-    dices: DiceResut[],
+    dices: DiceResult[],
     player: Player = this.players.current
   ): MovePath[] {
     // todo check if in prison
