@@ -1,6 +1,6 @@
 export enum PlayerColor {
-  "black" = 0,
-  "white" = 1
+  "black" = "black",
+  "white" = "white"
 }
 
 export enum PlayerHome {
