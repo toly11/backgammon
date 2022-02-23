@@ -11,17 +11,16 @@ interface Turn {
   possibleMoves: MovePath[];
 }
 
-interface CompletedTurn extends Turn {
-  submittedMove: MovePath[];
-}
+// interface CompletedTurn extends Turn {
+//   submittedMove: MovePath[];
+// }
 
 export class Board {
   // todo make private whatever is possible
-  players: Players;
-  private turnsHistory: CompletedTurn[] = [];
-  private currentTurn: Turn;
-
   points = initialPointsState;
+  players: Players;
+  private currentTurn: Turn;
+  // private turnsHistory: CompletedTurn[] = [];
 
   constructor() {
     const white = new Player(PlayerColor.white);
@@ -46,7 +45,9 @@ export class Board {
   submitMove(submittedMove: MovePath[]) {
     // todo validate move.
 
-    this.turnsHistory.push({ ...this.currentTurn, submittedMove });
+    // this.turnsHistory.push({ ...this.currentTurn, submittedMove });
+    if (submittedMove) {
+    }
 
     this.generateNextMove();
   }
