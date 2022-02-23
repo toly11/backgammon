@@ -24,14 +24,13 @@ export class Board {
   points = initialPointsState;
 
   constructor() {
-    const _white = new Player(PlayerColor.white);
-    const _black = new Player(PlayerColor.black);
+    const white = new Player(PlayerColor.white);
+    const black = new Player(PlayerColor.black);
 
-    // todo maybe move this logic to the Players constructor
     const dices = Dices.getStarterDices();
-    const starter = dices.numbers[0] > dices.numbers[1] ? _white : _black;
+    const starter = dices.numbers[0] > dices.numbers[1] ? white : black;
 
-    this.players = new Players(_white, _black, starter);
+    this.players = new Players(white, black, starter);
 
     this.currentTurn = {
       player: starter,
