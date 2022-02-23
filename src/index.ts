@@ -2,7 +2,7 @@ import { MovePath } from "./modules/Board";
 import { Player, PlayerColor, Players } from "./modules/Player";
 import { Dice, DiceResult } from "./modules/Dice";
 import { Point } from "./modules/Point";
-import { initialState } from "./startingState";
+import { initialState } from "./initialState";
 import { unshiftFrom } from "./util";
 
 interface Turn {
