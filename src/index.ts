@@ -21,7 +21,7 @@ export class Board {
   private turnsHistory: CompletedTurn[] = [];
   private currentTurn: Turn;
 
-  state = initialState;
+  points = initialState;
 
   constructor() {
     const _white = new Player(PlayerColor.white);
@@ -66,7 +66,7 @@ export class Board {
   }
 
   PlayerInPrison(player: Player = this.players.current): boolean {
-    return this.state.prison.includesCheckerOf(player);
+    return player.prison.checkers.length > 0;
   }
 
   currentPlayerCanBearOff(): boolean {
@@ -81,14 +81,14 @@ export class Board {
   }
 
   getPlayersPoints(player: Player = this.players.current) {
-    return this.state.points.filter(point => point.includesCheckerOf(player));
+    return this.points.filter(point => point.includesCheckerOf(player));
   }
 
   score(player: Player) {
     const playersPoints = this.getPlayersPoints(player);
 
     if (this.PlayerInPrison(player)) {
-      playersPoints.push(this.state.prison);
+      playersPoints.push(player.prison);
     }
 
     let totalScore = 0;
@@ -107,12 +107,12 @@ export class Board {
   ): Point | undefined {
     const position =
       player.color === PlayerColor.white
-        ? Math.max(point.position - dice, player.home)
-        : Math.min(point.position + dice, player.home);
+        ? Math.max(point.position - dice, player.home.position)
+        : Math.min(point.position + dice, player.home.position);
 
     return Point.getPointRefByPosition(
       position as Point["position"],
-      this.state
+      this.points
     );
   }
 

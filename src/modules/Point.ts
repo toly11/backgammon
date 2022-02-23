@@ -14,14 +14,10 @@ export class Point {
   }
 
   relativePositionFromHome(player: Player) {
-    if (this.position === 25)
-      // is prison
-      return this.position;
-
     if (player.color === PlayerColor.white) {
       return this.position;
     } else {
-      return player.home - this.position;
+      return player.home.position - this.position;
     }
   }
 
@@ -51,8 +47,8 @@ export class Point {
 
   static getPointRefByPosition(
     position: Point["position"],
-    state: Board["state"]
+    points: Board["points"]
   ): Point | undefined {
-    return state.points.find(p => p.position === position);
+    return points.find(p => p.position === position);
   }
 }

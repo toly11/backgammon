@@ -1,3 +1,5 @@
+import { Point } from "./Point";
+
 export enum PlayerColor {
   "black" = "black",
   "white" = "white"
@@ -8,13 +10,21 @@ export enum PlayerHome {
   white = 0
 }
 
+export enum PlayerPrison {
+  white = 25,
+  black = 0
+}
+
 export class Player {
   // todo move enums into this class.
-  home: PlayerHome;
+  home: Point;
+  prison: Point;
+  color: PlayerColor;
 
-  constructor(public color: PlayerColor) {
-    this.home =
-      color === PlayerColor.white ? PlayerHome.white : PlayerHome.black;
+  constructor(color: PlayerColor) {
+    this.home = new Point(PlayerHome[color]);
+    this.prison = new Point(PlayerPrison[color]);
+    this.color = color;
   }
 }
 
