@@ -6,8 +6,8 @@ export enum PlayerColor {
 }
 
 export enum PlayerHome {
-  black = 25,
-  white = 0
+  white = 0,
+  black = 25
 }
 
 export enum PlayerPrison {
@@ -31,22 +31,30 @@ export class Player {
 export class Players {
   private _current: Player;
 
-  // todo use inffer on starter, to make sure is's one of the first 2 args
+  // todo use infer on starter, to make sure is's one of the first 2 args
   constructor(private white: Player, private black: Player, starter: Player) {
     this._current = starter;
   }
 
-  get current() {
+  get current(): Player {
     return this._current;
   }
 
-  toggle(): Player {
-    if (this.current === this.white) {
-      this._current = this.black;
-    } else {
-      this._current = this.white;
-    }
+  get second(): Player {
+    return this.current === this.white ? this.black : this.white;
+  }
 
+  get White() {
+    return this.white;
+  }
+
+  get Black() {
+    return this.black;
+  }
+
+  // todo hide from public api
+  toggle(): Player {
+    this._current = this.second;
     return this.current;
   }
 }
