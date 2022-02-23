@@ -19,7 +19,7 @@ export class Board {
   // todo make private whatever is possible
   points = initialPointsState;
   players: Players;
-  private currentTurn: Turn;
+  currentTurn: Turn;
   // private turnsHistory: CompletedTurn[] = [];
 
   constructor() {
@@ -36,10 +36,6 @@ export class Board {
       dices,
       possibleMoves: this.getAllMovePaths(dices, starter)
     };
-  }
-
-  getMove(): Turn {
-    return this.currentTurn;
   }
 
   submitMove(submittedMove: MovePath[]) {
