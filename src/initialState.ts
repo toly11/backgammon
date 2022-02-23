@@ -2,7 +2,7 @@ import { Checker } from "./modules/Checker";
 import { PlayerColor } from "./modules/Player";
 import { Point } from "./modules/Point";
 
-export const initialState: Point[] = [
+export const initialPointsState: Point[] = [
   new Point(1, repeatCheckers(2, PlayerColor.black)),
   new Point(2),
   new Point(3),

@@ -2,7 +2,7 @@ import { MovePath } from "./modules/Board";
 import { Player, PlayerColor, Players } from "./modules/Player";
 import { Dice, DiceResult } from "./modules/Dice";
 import { Point } from "./modules/Point";
-import { initialState } from "./initialState";
+import { initialPointsState } from "./initialState";
 import { unshiftFrom } from "./util";
 
 interface Turn {
@@ -21,7 +21,7 @@ export class Board {
   private turnsHistory: CompletedTurn[] = [];
   private currentTurn: Turn;
 
-  points = initialState;
+  points = initialPointsState;
 
   constructor() {
     const _white = new Player(PlayerColor.white);
