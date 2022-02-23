@@ -8,13 +8,13 @@ describe("Board", () => {
   describe("varify players colors", () => {
     const currentPlayer = board.players.current;
 
-    it("current player should be 0||1", () => {
-      expect([0, 1]).toContain(currentPlayer.color);
+    it("current player should be black||white", () => {
+      expect(["black", "white"]).toContain(currentPlayer.color);
     });
 
     it("toggle() should work", () => {
-      const nextPlayer = Math.abs(currentPlayer.color - 1); // toggles 1 and 0
-      expect(board.players.toggle().color).toEqual(nextPlayer);
+      const nextPlayer = board.players.toggle();
+      expect(currentPlayer.color).not.toEqual(nextPlayer);
     });
   });
 });
