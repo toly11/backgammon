@@ -1,9 +1,9 @@
 import { Point } from "./Point";
-import { DiceResult } from "./Dice";
+import { SingleDice } from "./Dice";
 
 export interface SingleMove {
   from: Point;
   to: Point;
-  uses: DiceResult;
+  uses: SingleDice;
 }
 export type MovePath = SingleMove[];

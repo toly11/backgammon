@@ -1,12 +1,12 @@
 import { MovePath } from "./modules/Board";
 import { Player, PlayerColor, Players } from "./modules/Player";
-import { Dice, DiceResult } from "./modules/Dice";
+import { Dices, SingleDice } from "./modules/Dice";
 import { Point } from "./modules/Point";
 import { initialPointsState } from "./initialState";
 import { unshiftFrom } from "./util";
 
 interface Turn {
-  dices: DiceResult[];
+  dices: Dices;
   player: Player;
   possibleMoves: MovePath[];
 }
@@ -28,15 +28,15 @@ export class Board {
     const _black = new Player(PlayerColor.black);
 
     // todo maybe move this logic to the Players constructor
-    const starterDices = Dice.getStarterDices();
-    const starter = starterDices[0] > starterDices[1] ? _white : _black;
+    const dices = Dices.getStarterDices();
+    const starter = dices.numbers[0] > dices.numbers[1] ? _white : _black;
 
     this.players = new Players(_white, _black, starter);
 
     this.currentTurn = {
       player: starter,
-      dices: starterDices,
-      possibleMoves: this.getAllMovePaths(starterDices, starter)
+      dices,
+      possibleMoves: this.getAllMovePaths(dices, starter)
     };
   }
 
@@ -53,7 +53,7 @@ export class Board {
   }
 
   private generateNextMove() {
-    const dices = Dice.roll2Dices();
+    const dices = Dices.roll2Dices();
     const player = this.players.toggle();
     const possibleMoves = this.getAllMovePaths(dices, player);
 
@@ -102,7 +102,7 @@ export class Board {
 
   getTargetPoint(
     point: Point,
-    dice: DiceResult,
+    dice: SingleDice,
     player: Player
   ): Point | undefined {
     const position =
@@ -116,14 +116,10 @@ export class Board {
     );
   }
 
-  getMovePathsForPoint(
-    point: Point,
-    dices: DiceResult[],
-    player: Player
-  ): MovePath[] {
+  getMovePathsForPoint(point: Point, dices: Dices, player: Player): MovePath[] {
     const pointPaths: MovePath[] = [];
 
-    const LoopDices = (dices: DiceResult[]): void => {
+    const LoopDices = (dices: SingleDice[]): void => {
       const movePath: MovePath = [];
       let distance = 0;
       let lastPoint = point;
@@ -145,15 +141,15 @@ export class Board {
       }
     };
 
-    dices.forEach(dice => {
-      LoopDices(unshiftFrom(dices, dice));
+    dices.numbers.forEach(dice => {
+      LoopDices(unshiftFrom(dices.numbers, dice));
     });
 
     return pointPaths;
   }
 
   getAllMovePaths(
-    dices: DiceResult[],
+    dices: Dices,
     player: Player = this.players.current
   ): MovePath[] {
     // todo check if in prison
