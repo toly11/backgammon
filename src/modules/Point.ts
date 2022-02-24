@@ -8,6 +8,23 @@ export type PointNames = Exclude<UntilRange<25>, 0> | 25;
 export class Point {
   constructor(public position: PointNames, public checkers: Checker[] = []) {}
 
+  moveFirstCheckerTo(targetPoint: Point) {
+    const checker = this.getFirstChecker();
+    if (!checker)
+      throw new Error("did not get a checker ref, the point may be empty.");
+
+    this.checkers.splice(checker.index, 1);
+    targetPoint.checkers.push(checker.ref);
+  }
+
+  private getFirstChecker(): { ref: Checker; index: number } | null {
+    if (this.checkers.length === 0) {
+      return null;
+    } else {
+      return { index: 0, ref: this.checkers[0] };
+    }
+  }
+
   // ! not in use
   get oppisetPosition() {
     return 25 - this.position;
